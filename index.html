@@ -1,21 +1,57 @@
 <html>
 <head>
-<title>HTML文書の例</title>
-ＨＴＭＬ文書の情報はここに書きます。
+<title>Group Generator</title>
 </head>
-<body bgcolor="#0060ff">
-
-<center>
-<h1>簡単なHTML文書の例 </h1></center>
-<hr>
-<p>
-<h3>基本的なタグだけでも簡単にできます</h3>
- 基本的なタグをいくつか知っているだけでも最低限の<B>簡単なHTML文書</B>が作れます。 これにリンクというものをつければ立派なホームページを作ることができます。<BR>
-<h4>さらに応用タグを使うといろいろなことができます。</h4>
-<hr align=center size=10 width=420 color="#20ff00">
-<center><marquee width=300 bgcolor="#ffffff">
-私のホームページへようこそ！！
-</marquee></center>
-
+<body>
+  <h1>Group Generator</h1>
+  <form action="generate.php" method="post">
+    <label for="name">Name: </label>
+    <input id="name" type="text" name="name" />
+    <br />
+    <label for="gender">Gender: </label>
+    <input id="gender" type="text" name="gender" />
+    <br />
+    <label for="nationality">Nationality: </label>
+    <input id="nationality" type="text" name="nationality" />
+    <br />
+    <input type="submit" value="Submit" />
+  </form>
 </body>
 </html>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $name = $_POST['name'];
+  $gender = $_POST['gender'];
+  $nationality = $_POST['nationality'];
+
+  // データをグループに分ける
+  $groups = array(
+    'Group 1' => array(),
+    'Group 2' => array(),
+    'Group 3' => array(),
+    'Group 4' => array(),
+    'Group 5' => array(),
+    'Group 6' => array(),
+    'Group 7' => array(),
+    'Group 8' => array()
+  );
+
+  // データをグループに追加
+  $groups['Group 1'][] = array(
+    'name' => $name,
+    'gender' => $gender,
+    'nationality' => $nationality
+  );
+
+  // グループを表示
+  echo '<table>';
+  foreach ($groups as $group => $people) {
+    echo '<tr><th>' . $group . '</th></tr>';
+    foreach ($people as $person) {
+      echo '<tr><td>' . $person['name'] . ', ' . $person['gender'] . ', ' . $person['nationality'] . '</td></tr>';
+    }
+  }
+  echo '</table>';
+}
+?>
